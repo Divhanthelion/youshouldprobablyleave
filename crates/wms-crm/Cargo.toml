@@ -1,0 +1,20 @@
+[package]
+name = "wms-crm"
+version.workspace = true
+edition = "2024"
+description = "Customer relationship management module"
+
+[dependencies]
+wms-core = { path = "../wms-core" }
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+uuid.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+rusqlite.workspace = true
+validator.workspace = true
+phonenumber.workspace = true
+

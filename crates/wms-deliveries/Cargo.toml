@@ -1,0 +1,21 @@
+[package]
+name = "wms-deliveries"
+version.workspace = true
+edition = "2024"
+description = "Delivery and logistics module with route optimization"
+
+[dependencies]
+wms-core = { path = "../wms-core" }
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+uuid.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+rusqlite.workspace = true
+geo.workspace = true
+vrp-core.workspace = true
+vrp-pragmatic.workspace = true
+

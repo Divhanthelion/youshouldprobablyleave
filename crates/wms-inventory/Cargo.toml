@@ -1,0 +1,19 @@
+[package]
+name = "wms-inventory"
+version.workspace = true
+edition = "2024"
+description = "Inventory management module with forecasting for WMS"
+
+[dependencies]
+wms-core = { path = "../wms-core" }
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+uuid.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+augurs.workspace = true
+rusqlite.workspace = true
+

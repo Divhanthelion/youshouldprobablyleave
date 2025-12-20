@@ -1,0 +1,16 @@
+[build]
+target = "index.html"
+dist = "dist"
+
+[watch]
+watch = ["src", "index.html", "styles"]
+
+[serve]
+port = 1420
+open = false
+
+[[hooks]]
+stage = "post_build"
+command = "sh"
+command_arguments = ["-c", "cp -r styles/* dist/ 2>/dev/null || true"]
+

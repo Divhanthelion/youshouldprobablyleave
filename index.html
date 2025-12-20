@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <title>Warehouse Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link data-trunk rel="rust" data-wasm-opt="z" />
+    
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <noscript>
+        <div style="padding: 2rem; text-align: center; font-family: system-ui;">
+            <h1>JavaScript Required</h1>
+            <p>This application requires JavaScript to run. Please enable it in your browser settings.</p>
+        </div>
+    </noscript>
+    
+    <!-- Loading screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">📦</div>
+            <div class="loading-spinner"></div>
+            <p>Loading WMS...</p>
+        </div>
+    </div>
+    
+    <script>
+        // Hide loading screen when WASM is ready
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loading-screen');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.remove(), 300);
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
+
