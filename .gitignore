@@ -3,3 +3,8 @@
 *.DS_Store
 target/
 context_prompt.txt
+
+# Build artifacts
+dist/
+src-tauri/target/
+src-tauri/gen/
