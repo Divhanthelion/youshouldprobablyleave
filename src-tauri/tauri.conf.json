@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2.0.0",
-  "productName": "Warehouse Management System",
+  "productName": "wms-rust",
   "identifier": "com.warehouse.wms",
   "version": "0.1.0",
   "build": {
@@ -38,8 +38,8 @@
     "resources": [],
     "copyright": "© 2025 WMS Team",
     "category": "Business",
-    "shortDescription": "Rust-Native Warehouse Management System",
-    "longDescription": "A comprehensive offline-first warehouse management system built with Rust, Tauri v2, and WebAssembly. Features inventory management, shipping/receiving, deliveries, CRM, and timesheet modules.",
+    "shortDescription": "Warehouse management system",
+    "longDescription": "An offline-first warehouse management system built with Rust, Tauri v2, and WebAssembly. Features inventory management, shipping/receiving, deliveries, CRM, and timesheet modules.",
     "iOS": {
       "developmentTeam": "",
       "minimumSystemVersion": "15.0"

@@ -2,7 +2,7 @@
 name = "wms-app"
 version.workspace = true
 edition = "2024"
-description = "Rust-Native Warehouse Management System"
+description = "Warehouse management system application"
 authors.workspace = true
 license.workspace = true
 

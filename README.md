@@ -1,51 +1,51 @@
-# Warehouse Management System (WMS)
+# wms-rust
 
-A comprehensive, offline-first Warehouse Management System built entirely in Rust using Tauri v2 and WebAssembly. This application provides enterprise-grade functionality for inventory management, shipping/receiving, deliveries, CRM, and workforce management.
+An offline-first warehouse management system built in Rust using Tauri v2 and WebAssembly.
 
-## 🚀 Features
+## Features
 
 ### Core Modules
 
-- **📦 Inventory Management**
+- **Inventory Management**
   - Real-time stock tracking with CRDT-based conflict resolution
   - Demand forecasting using time series analysis
   - ABC classification and reorder point management
   - Barcode scanning support (EAN-13, UPC, CODE-128, QR)
 
-- **🚚 Shipping & Receiving**
+- **Shipping & Receiving**
   - Outbound shipment management with pick/pack workflow
   - Inbound receipt processing
   - ZPL label generation for thermal printers
   - PDF document generation (packing slips, invoices)
   - Multi-carrier support (UPS, FedEx, USPS, DHL)
 
-- **🗺️ Deliveries & Logistics**
+- **Deliveries & Logistics**
   - Route optimization using Vehicle Routing Problem (VRP) solver
   - Geofencing for automatic arrival detection
   - Real-time driver location tracking
   - MapLibre-rs integration for offline mapping
 
-- **👥 Customer Relationship Management (CRM)**
+- **Customer Relationship Management (CRM)**
   - Customer and supplier management
   - Contact management
   - International phone validation
   - Email validation
 
-- **⏰ Timesheets & Workforce**
+- **Timesheets & Workforce**
   - Biometric clock in/out
   - Break tracking
   - Overtime calculation
   - Excel/CSV export
 
-### Technical Highlights
+### Technical Overview
 
-- **🔒 Offline-First Architecture**: Full functionality without internet connectivity using SQLite + SQLCipher encryption
-- **🔄 CRDT Sync**: Conflict-free data synchronization using Automerge
-- **⚡ Native Performance**: Rust backend with Tauri v2 for near-native speed
-- **📱 Cross-Platform**: Runs on Windows, macOS, Linux, iOS, and Android
-- **🎨 Modern UI**: Leptos-based reactive frontend compiled to WebAssembly
+- **Offline-First Architecture**: Full functionality without internet connectivity using SQLite + SQLCipher encryption
+- **Sync**: Conflict-free data synchronization using Automerge
+- **Performance**: Rust backend with Tauri v2
+- **Cross-Platform**: Runs on Windows, macOS, Linux, iOS, and Android
+- **UI**: Leptos-based reactive frontend compiled to WebAssembly
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Rust 1.75+ (2024 edition)
 - Node.js 18+ (for build tools)
@@ -66,7 +66,7 @@ A comprehensive, offline-first Warehouse Management System built entirely in Rus
 - WebKitGTK 4.1+
 - `libssl-dev`, `libgtk-3-dev`
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Clone the repository
@@ -83,7 +83,7 @@ cargo tauri dev
 cargo tauri build
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 wms-rust/
@@ -113,7 +113,7 @@ wms-rust/
 └── Trunk.toml           # Trunk configuration
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -133,7 +133,7 @@ The application uses SQLite with SQLCipher encryption. The database is created a
 - **macOS:** `~/Library/Application Support/com.warehouse.wms/wms.db`
 - **Linux:** `~/.config/com.warehouse.wms/wms.db`
 
-## 📱 Mobile Development
+## Mobile Development
 
 ### Android
 
@@ -161,7 +161,7 @@ cargo tauri ios dev
 cargo tauri ios build
 ```
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Run all tests
@@ -174,7 +174,7 @@ cargo test -p wms-inventory
 cargo llvm-cov --workspace
 ```
 
-## 📦 Crate Dependencies
+## Crate Dependencies
 
 | Crate | Purpose |
 |-------|---------|
@@ -191,29 +191,28 @@ cargo llvm-cov --workspace
 | `rust_xlsxwriter` | Excel export |
 | `leptos` | Frontend framework |
 
-## 🔐 Security
+## Security
 
 - All data at rest is encrypted using SQLCipher (AES-256)
 - Biometric authentication for time clock operations
 - Supply chain security via `cargo-vet` and `cargo-deny`
 - No unsafe code in application crates
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit changes (`git commit -m 'Add new feature'`)
+4. Push to branch (`git push origin feature/new-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [Tauri](https://tauri.app/) - Application framework
 - [Leptos](https://leptos.dev/) - Reactive web framework
 - [Automerge](https://automerge.org/) - CRDT library
 - [rxing](https://github.com/rxing-core/rxing) - Barcode library
-
