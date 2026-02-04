@@ -243,8 +243,8 @@ impl ForecastEngine {
         
         let mape = test.iter()
             .zip(predictions.iter())
-            .filter(|(&actual, _)| actual != 0.0)
-            .map(|(&actual, &pred)| ((actual - pred) / actual).abs())
+            .filter(|(actual, _)| **actual != 0.0)
+            .map(|(actual, pred)| ((*actual - *pred) / *actual).abs())
             .sum::<f64>() / n * 100.0;
         
         ForecastMetrics { mae, mse, rmse, mape }

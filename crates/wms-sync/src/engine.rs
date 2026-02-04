@@ -210,7 +210,7 @@ impl SyncEngine {
         let incoming_changes: Vec<u8> = change.crdt_changes.clone();
         
         // Merge using Automerge
-        let merged_doc = if let Some(mut doc) = existing_doc {
+        let mut merged_doc = if let Some(mut doc) = existing_doc {
             doc.merge(&incoming_changes)?;
             doc
         } else {
@@ -218,7 +218,7 @@ impl SyncEngine {
         };
         
         // Save merged document
-        self.save_crdt_document(&change.table_name, &change.record_id, &merged_doc)?;
+        self.save_crdt_document(&change.table_name, &change.record_id, &mut merged_doc)?;
         
         // Apply to SQL table
         self.apply_to_sql_table(&change.table_name, &change.record_id, &merged_doc)?;
@@ -242,7 +242,7 @@ impl SyncEngine {
     }
     
     /// Save a CRDT document to storage
-    fn save_crdt_document(&self, doc_type: &str, record_id: &str, doc: &CrdtDocument) -> Result<()> {
+    fn save_crdt_document(&self, doc_type: &str, record_id: &str, doc: &mut CrdtDocument) -> Result<()> {
         let changes = doc.save()?;
         let heads = doc.get_heads_json()?;
         

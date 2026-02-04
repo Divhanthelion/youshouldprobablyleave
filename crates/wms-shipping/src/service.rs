@@ -3,6 +3,7 @@
 //! Core business logic for shipping and receiving operations.
 
 use std::sync::Arc;
+use base64::Engine;
 use chrono::Utc;
 use rusqlite::params;
 use tracing::{info, debug};
@@ -162,7 +163,7 @@ impl ShippingService {
             package_id: None,
             label_type: LabelType::Shipping,
             format: LabelFormat::Zpl,
-            data: base64::Engine::encode(&base64::engine::general_purpose::STANDARD, &zpl_data),
+            data: base64::engine::general_purpose::STANDARD.encode(&zpl_data),
             created_at: Utc::now(),
         };
         

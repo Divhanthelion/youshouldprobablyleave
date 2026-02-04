@@ -17,4 +17,5 @@ tracing.workspace = true
 rusqlite.workspace = true
 rust_xlsxwriter.workspace = true
 csv.workspace = true
+base64 = "0.22"
 

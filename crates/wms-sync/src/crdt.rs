@@ -27,7 +27,7 @@ impl CrdtDocument {
     }
     
     /// Save the document to bytes
-    pub fn save(&self) -> Result<Vec<u8>> {
+    pub fn save(&mut self) -> Result<Vec<u8>> {
         Ok(self.doc.save())
     }
     
@@ -43,12 +43,12 @@ impl CrdtDocument {
     }
     
     /// Get the document heads as JSON for storage
-    pub fn get_heads_json(&self) -> Result<String> {
+    pub fn get_heads_json(&mut self) -> Result<String> {
         let heads: Vec<String> = self.doc.get_heads()
             .iter()
             .map(|h| h.to_string())
             .collect();
-        
+
         serde_json::to_string(&heads)
             .map_err(|e| WmsError::Serialization(e))
     }
@@ -124,7 +124,8 @@ impl CrdtDocument {
     /// Add an operation to a list (for inventory adjustments)
     pub fn push_operation(&mut self, list_key: &str, operation: &CrdtOperation) -> Result<()> {
         // Get or create the list
-        let list_id = match self.doc.get(automerge::ROOT, list_key)? {
+        let list_id = match self.doc.get(automerge::ROOT, list_key)
+            .map_err(|e| WmsError::SyncError(e.to_string()))? {
             Some((_, id)) => id,
             None => self.doc.put_object(automerge::ROOT, list_key, ObjType::List)
                 .map_err(|e| WmsError::SyncError(e.to_string()))?,
@@ -150,24 +151,25 @@ impl CrdtDocument {
     
     /// Calculate final value by summing operations
     pub fn calculate_sum(&self, list_key: &str) -> Result<f64> {
-        let list_id = match self.doc.get(automerge::ROOT, list_key)? {
+        let list_id = match self.doc.get(automerge::ROOT, list_key)
+            .map_err(|e| WmsError::SyncError(e.to_string()))? {
             Some((_, id)) => id,
             None => return Ok(0.0),
         };
-        
+
         let len = self.doc.length(&list_id);
         let mut sum = 0.0;
-        
+
         for i in 0..len {
-            if let Some((_, op_id)) = self.doc.get(&list_id, i)? {
-                if let Some((val, _)) = self.doc.get(&op_id, "delta")? {
+            if let Ok(Some((_, op_id))) = self.doc.get(&list_id, i) {
+                if let Ok(Some((val, _))) = self.doc.get(&op_id, "delta") {
                     if let Some(delta) = val.to_f64() {
                         sum += delta;
                     }
                 }
             }
         }
-        
+
         Ok(sum)
     }
 }

@@ -60,7 +60,7 @@ impl ExcelExporter {
         // Column headers
         let headers = ["Date", "Clock In", "Clock Out", "Break (min)", "Hours", "Overtime", "Status"];
         for (col, header) in headers.iter().enumerate() {
-            worksheet.write_string_with_format(4, col as u16, header, &header_format).ok();
+            worksheet.write_string_with_format(4, col as u16, *header, &header_format).ok();
         }
         
         // Data rows

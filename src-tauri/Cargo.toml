@@ -15,7 +15,7 @@ tauri-build = { version = "2.0", features = [] }
 
 [dependencies]
 # Tauri
-tauri = { version = "2.1", features = ["macos-private-api"] }
+tauri = { version = "2.1", features = [] }
 tauri-plugin-shell = "2.0"
 tauri-plugin-fs = "2.0"
 tauri-plugin-dialog = "2.0"
@@ -23,7 +23,7 @@ tauri-plugin-notification = "2.0"
 tauri-plugin-barcode-scanner = "2.0"
 tauri-plugin-biometric = "2.0"
 tauri-plugin-geolocation = "2.0"
-tauri-plugin-network = { version = "0.1", git = "https://github.com/tauri-apps/plugins-workspace" }
+tauri-plugin-network = "2.0"
 tauri-plugin-blec = "0.1"
 
 # Workspace crates

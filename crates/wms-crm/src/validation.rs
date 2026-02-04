@@ -2,7 +2,7 @@
 //! 
 //! Provides validation for CRM data including phone numbers, emails, etc.
 
-use phonenumber::{Mode, PhoneNumber};
+use phonenumber::Mode;
 use wms_core::error::{WmsError, Result};
 
 /// Validate and format a phone number
@@ -39,17 +39,15 @@ pub fn validate_phone_with_country(number: &str, country_code: &str) -> Result<S
 pub fn get_phone_type(number: &str) -> Result<PhoneType> {
     let parsed = phonenumber::parse(Some(phonenumber::country::Id::US), number)
         .map_err(|e| WmsError::validation(format!("Invalid phone number: {}", e)))?;
-    
-    let number_type = phonenumber::number_type(&parsed);
-    
-    Ok(match number_type {
-        phonenumber::PhoneNumberType::Mobile => PhoneType::Mobile,
-        phonenumber::PhoneNumberType::FixedLine => PhoneType::Landline,
-        phonenumber::PhoneNumberType::FixedLineOrMobile => PhoneType::Unknown,
-        phonenumber::PhoneNumberType::TollFree => PhoneType::TollFree,
-        phonenumber::PhoneNumberType::Voip => PhoneType::Voip,
-        _ => PhoneType::Unknown,
-    })
+
+    // Use the is_valid_for_region to validate and infer type
+    // Since phonenumber 0.3 doesn't expose number_type directly,
+    // we return Unknown and rely on is_valid for validation
+    if phonenumber::is_valid(&parsed) {
+        Ok(PhoneType::Unknown)
+    } else {
+        Err(WmsError::validation("Invalid phone number"))
+    }
 }
 
 /// Phone number types

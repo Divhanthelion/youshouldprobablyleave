@@ -17,4 +17,5 @@ tracing.workspace = true
 rusqlite.workspace = true
 rxing.workspace = true
 printpdf.workspace = true
+base64 = "0.22"
 

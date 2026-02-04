@@ -3,7 +3,7 @@
 //! Uses rxing (Rust port of ZXing) for decoding barcodes from images.
 
 use rxing::{BarcodeFormat, DecodeHintType, DecodeHintValue, DecodingHintDictionary, Luma8LuminanceSource, Reader};
-use rxing::multi::GenericMultipleBarcodeReader;
+use rxing::multi::{GenericMultipleBarcodeReader, MultipleBarcodeReader};
 use rxing::oned::MultiFormatOneDReader;
 use rxing::common::HybridBinarizer;
 use rxing::BinaryBitmap;
@@ -56,14 +56,15 @@ impl BarcodeDecoder {
         let bitmap = BinaryBitmap::new(binarizer);
         
         // Try decoding with multi-format reader
-        let reader = MultiFormatOneDReader::default();
-        
-        match reader.decode_with_hints(&bitmap, &self.hints) {
+        let mut reader = MultiFormatOneDReader::default();
+        let mut bitmap = bitmap;
+
+        match reader.decode_with_hints(&mut bitmap, &self.hints) {
             Ok(result) => {
                 Ok(BarcodeResult {
                     text: result.getText().to_string(),
                     format: Self::format_to_string(result.getBarcodeFormat()),
-                    raw_bytes: result.getRawBytes().map(|b| b.to_vec()),
+                    raw_bytes: Some(result.getRawBytes().to_vec()),
                     orientation: Some(0), // Could extract from ResultPoint
                     confidence: 1.0, // rxing doesn't provide confidence
                 })
@@ -86,14 +87,15 @@ impl BarcodeDecoder {
         let bitmap = BinaryBitmap::new(binarizer);
         
         let reader = MultiFormatOneDReader::default();
-        let multi_reader = GenericMultipleBarcodeReader::new(reader);
-        
-        match multi_reader.decode_multiple_with_hints(&bitmap, &self.hints) {
+        let mut multi_reader = GenericMultipleBarcodeReader::new(reader);
+        let mut bitmap = bitmap;
+
+        match multi_reader.decode_multiple_with_hints(&mut bitmap, &self.hints) {
             Ok(results) => {
                 Ok(results.into_iter().map(|r| BarcodeResult {
                     text: r.getText().to_string(),
                     format: Self::format_to_string(r.getBarcodeFormat()),
-                    raw_bytes: r.getRawBytes().map(|b| b.to_vec()),
+                    raw_bytes: Some(r.getRawBytes().to_vec()),
                     orientation: None,
                     confidence: 1.0,
                 }).collect())

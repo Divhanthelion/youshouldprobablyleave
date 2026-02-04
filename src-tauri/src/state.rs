@@ -4,7 +4,7 @@
 //! sync engine, and module services.
 
 use std::sync::Arc;
-use tauri::AppHandle;
+use tauri::{AppHandle, Manager};
 use tokio::sync::RwLock;
 use anyhow::Result;
 use tracing::info;

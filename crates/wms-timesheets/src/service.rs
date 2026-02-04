@@ -3,6 +3,7 @@
 //! Core business logic for time tracking and workforce management.
 
 use std::sync::Arc;
+use base64::Engine;
 use chrono::{Utc, NaiveDate, Datelike};
 use rusqlite::params;
 use tracing::{info, debug, warn};
@@ -251,7 +252,7 @@ impl TimesheetService {
         info!("Exported timesheet for {} in {} format", user_id, format);
         
         Ok(TimesheetExport {
-            data: base64::Engine::encode(&base64::engine::general_purpose::STANDARD, &data),
+            data: base64::engine::general_purpose::STANDARD.encode(&data),
             content_type: content_type.to_string(),
             filename,
         })

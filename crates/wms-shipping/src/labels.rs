@@ -152,7 +152,7 @@ impl Default for ZplLabel {
 
 /// PDF Generator for shipping documents
 pub struct PdfGenerator {
-    doc: PdfDocument,
+    doc: PdfDocumentReference,
     current_page: PdfPageIndex,
     current_layer: PdfLayerIndex,
 }
@@ -166,14 +166,14 @@ impl PdfGenerator {
             Mm(297.0), // A4 height
             "Layer 1",
         );
-        
+
         Self {
             doc,
             current_page: page1,
             current_layer: layer1,
         }
     }
-    
+
     /// Create a shipping document (letter size)
     pub fn new_shipping_doc(title: &str) -> Self {
         let (doc, page1, layer1) = PdfDocument::new(
@@ -182,14 +182,14 @@ impl PdfGenerator {
             Mm(279.4), // Letter height
             "Layer 1",
         );
-        
+
         Self {
             doc,
             current_page: page1,
             current_layer: layer1,
         }
     }
-    
+
     /// Add a new page
     pub fn add_page(&mut self) {
         let (page, layer) = self.doc.add_page(
@@ -200,63 +200,63 @@ impl PdfGenerator {
         self.current_page = page;
         self.current_layer = layer;
     }
-    
+
     /// Add text to the current page
     pub fn add_text(&self, x: f32, y: f32, text: &str, font_size: f32) {
         let font = self.doc.add_builtin_font(BuiltinFont::Helvetica).unwrap();
         let current_layer = self.doc.get_page(self.current_page).get_layer(self.current_layer);
-        
+
         current_layer.use_text(text, font_size, Mm(x), Mm(y), &font);
     }
-    
+
     /// Add bold text
     pub fn add_bold_text(&self, x: f32, y: f32, text: &str, font_size: f32) {
         let font = self.doc.add_builtin_font(BuiltinFont::HelveticaBold).unwrap();
         let current_layer = self.doc.get_page(self.current_page).get_layer(self.current_layer);
-        
+
         current_layer.use_text(text, font_size, Mm(x), Mm(y), &font);
     }
-    
+
     /// Draw a line
     pub fn draw_line(&self, x1: f32, y1: f32, x2: f32, y2: f32) {
         let current_layer = self.doc.get_page(self.current_page).get_layer(self.current_layer);
-        
+
         let points = vec![
             (Point::new(Mm(x1), Mm(y1)), false),
             (Point::new(Mm(x2), Mm(y2)), false),
         ];
-        
+
         let line = Line {
             points,
             is_closed: false,
         };
-        
+
         current_layer.add_line(line);
     }
-    
+
     /// Draw a rectangle
     pub fn draw_rect(&self, x: f32, y: f32, width: f32, height: f32) {
         let current_layer = self.doc.get_page(self.current_page).get_layer(self.current_layer);
-        
+
         let points = vec![
             (Point::new(Mm(x), Mm(y)), false),
             (Point::new(Mm(x + width), Mm(y)), false),
             (Point::new(Mm(x + width), Mm(y + height)), false),
             (Point::new(Mm(x), Mm(y + height)), false),
         ];
-        
+
         let rect = Line {
             points,
             is_closed: true,
         };
-        
+
         current_layer.add_line(rect);
     }
-    
+
     /// Save to bytes
-    pub fn save_to_bytes(&self) -> Vec<u8> {
+    pub fn save_to_bytes(self) -> Vec<u8> {
         let mut buffer = BufWriter::new(Vec::new());
-        self.doc.clone().save(&mut buffer).unwrap();
+        self.doc.save(&mut buffer).unwrap();
         buffer.into_inner().unwrap()
     }
 }

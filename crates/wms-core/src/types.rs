@@ -94,7 +94,7 @@ impl Default for SortDirection {
 }
 
 /// Address structure used across modules
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, validator::Validate)]
 pub struct Address {
     pub line1: String,
     #[serde(skip_serializing_if = "Option::is_none")]

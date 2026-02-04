@@ -28,7 +28,7 @@ pub fn run() {
         .plugin(tauri_plugin_notification::init())
         .setup(|app| {
             // Initialize application state
-            let app_state = AppState::new(app.handle())?;
+            let app_state = AppState::new(app.handle().clone())?;
             app.manage(app_state);
             
             info!("Application state initialized");
