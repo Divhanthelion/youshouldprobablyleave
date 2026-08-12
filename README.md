@@ -23,7 +23,7 @@ An offline-first warehouse management system built in Rust using Tauri v2 and We
   - Route optimization using Vehicle Routing Problem (VRP) solver
   - Geofencing for automatic arrival detection
   - Real-time driver location tracking
-  - MapLibre-rs integration for offline mapping
+  - Heuristic VRP solver for routes (no map view yet)
 
 - **Customer Relationship Management (CRM)**
   - Customer and supplier management
@@ -70,7 +70,7 @@ An offline-first warehouse management system built in Rust using Tauri v2 and We
 
 ```bash
 # Clone the repository
-git clone https://github.com/warehouse/wms-rust
+git clone https://github.com/Divhanthelion/wms-rust.git
 cd wms-rust
 
 # Install dependencies
